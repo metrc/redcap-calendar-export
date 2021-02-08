@@ -1,0 +1,30 @@
+{
+  "name": "Calendar Export",
+  "description": "Exports calendar events to Outlook format",
+  "documentation": "",
+
+  "namespace": "JHU\\CalendarExport",
+
+
+  "authors": [
+    {
+      "name": "Paige J Sullivan",
+      "email": "psulli26@jhu.edu",
+      "institution": "Johns Hopkins University - Bloomberg School of Public Health"
+    }
+  ],
+
+  "links": {
+    "project": [
+      {
+        "name": "Calendar Export",
+        "icon": "calendar-alt",
+        "url": "index.php"
+      }
+    ]
+  },
+
+  "permissions": [
+    "redcap_module_system_change_version"
+  ]
+}
