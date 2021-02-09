@@ -76,7 +76,8 @@ class ICS {
         'dtstart',
         'location',
         'summary',
-        'url'
+        'url',
+        'uid'
     );
 
     public function __construct($props) {
@@ -101,16 +102,14 @@ class ICS {
     }
 
     private function build_props() {
+
+
         // Build ICS properties - add header
+
         $ics_props = array(
-            'BEGIN:VCALENDAR',
-            'VERSION:2.0',
-            'PRODID:-//hacksw/handcal//NONSGML v1.0//EN',
-            'CALSCALE:GREGORIAN',
             'BEGIN:VEVENT'
         );
 
-        // Build ICS properties - add header
         $props = array();
         foreach($this->properties as $k => $v) {
             $props[strtoupper($k . ($k === 'url' ? ';VALUE=URI' : ''))] = $v;
@@ -118,16 +117,13 @@ class ICS {
 
         // Set some default values
         $props['DTSTAMP'] = $this->format_timestamp('now');
-        $props['UID'] = uniqid();
 
         // Append properties
         foreach ($props as $k => $v) {
             $ics_props[] = "$k:$v";
         }
 
-        // Build ICS properties - add footer
-        $ics_props[] = 'END:VEVENT';
-        $ics_props[] = 'END:VCALENDAR';
+        $ics_props[] = 'END:VEVENT' . ":\r\n";
 
         return $ics_props;
     }

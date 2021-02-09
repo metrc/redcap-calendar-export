@@ -12,6 +12,12 @@ class CalendarExport extends AbstractExternalModule {
             $month, $year, $pid));
     }
 
+    static function getEvent($cal_id) {
+        return db_fetch_assoc(db_query(sprintf('SELECT * FROM redcap_events_calendar WHERE cal_id = %d',
+            $cal_id)));
+    }
+
+
     static function decodeEvent($eventResult) {
         $returnResults = $eventResult;
 
@@ -27,23 +33,23 @@ class CalendarExport extends AbstractExternalModule {
         $returnResults['group_name'] = db_fetch_assoc(db_query(sprintf('SELECT group_name FROM  redcap_data_access_groups WHERE group_id = %d',
             $eventResult['group_id'])))['group_name'];
 
+        if ($eventResult['record']) {
+            // this is an event that is connected to a record
+            $returnResults['string_description'] = sprintf('%s : %s for record %d [%s]', $returnResults['project_name'],
+                $returnResults['event_description'], $eventResult['record'], $returnResults['group_name']);
+        } else {
+            // general project task
+            $returnResults['string_description'] = sprintf('%s - %s', $returnResults['project_name'], $returnResults['notes']);
+        }
+
+
         return $returnResults;
     }
 
-    static function generateForm($event) {
-        if ($event['record']) {
-            // this is an event that is connected to a record
-            $stringDescription = sprintf('%s %s for record %d [%s]', $event['project_name'],
-                $event['event_description'], $event['record'], $event['group_name']);
-        } else {
-            // general project task
-            $stringDescription = sprintf('%s - %s', $event['project_name'], $event['notes']);
-        }
+    static function generateCheckbox($event) {
+        $eventInfo = self::decodeEvent($event);
 
-        printf('<li><a href="../../modules/calendar_export_v1.0.0/downloadics.php?description=%s&date_start=%s">%s - %s</a></li>',
-            urlencode($stringDescription), urlencode($event['event_date']), $event['event_date'], $stringDescription);
-
-
+        printf('<label><input type="checkbox" name="cal_id[]" value="%d">&nbsp;%s</label><br/>', $eventInfo['cal_id'], $eventInfo['string_description']);
     }
 
 
