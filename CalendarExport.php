@@ -4,6 +4,7 @@ namespace JHU\CalendarExport;
 use ExternalModules\AbstractExternalModule;
 use ExternalModules\ExternalModules;
 
+
 class CalendarExport extends AbstractExternalModule {
 
     static function getEvents($month, $year, $pid) {
@@ -47,4 +48,3 @@ class CalendarExport extends AbstractExternalModule {
 
 
 }
-?>

@@ -3,9 +3,9 @@
 require_once APP_PATH_DOCROOT . 'ProjectGeneral/header.php';
 ?>
 
-<h4>Calendar Export to Outlook</h4>
-Click events you want to export to Outlook as an .ics file
-<hr/>
+    <h4>Calendar Export to Outlook</h4>
+    Click events you want to export to Outlook as an .ics file
+    <hr/>
 <?php
 
 if (!isset($_GET['year'])) {
