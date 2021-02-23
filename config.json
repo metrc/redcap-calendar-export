@@ -2,10 +2,12 @@
   "name": "Calendar Export",
   "description": "Exports calendar events to Outlook format",
   "documentation": "README.md",
-
   "namespace": "JHU\\CalendarExport",
-
-
+  "versions": [
+    {
+      "0.1.0": "Initial Development Version"
+    }
+  ],
   "authors": [
     {
       "name": "Paige Julianne Sullivan",
@@ -18,7 +20,6 @@
       "institution": "Johns Hopkins University - Bloomberg School of Public Health"
     }
   ],
-
   "links": {
     "project": [
       {
@@ -28,9 +29,6 @@
       }
     ]
   },
-
   "permissions": [
   ]
-
-
 }
