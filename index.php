@@ -50,7 +50,7 @@ $year = $_GET['year'];
 $results = \JHU\CalendarExport\CalendarExport::getEvents($month, $year, $_REQUEST['pid']);
 print('<form method="post">');
 while($result = db_fetch_assoc($results)) {
-    if (\JHU\CalendarExport\CalendarExport::hasAccessToDAG($_SESSION['username'], $_REQUEST['pid'], $result['project_id']))
+    if (\JHU\CalendarExport\CalendarExport::hasAccessToDAG($_SESSION['username'], $_REQUEST['pid'], $result['group_id']))
         \JHU\CalendarExport\CalendarExport::generateCheckbox($result);
 }
 print('<p><button type="submit">Download Events as ICS</button></p></form>');

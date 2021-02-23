@@ -7,6 +7,8 @@ use ExternalModules\ExternalModules;
 
 class CalendarExport extends AbstractExternalModule {
 
+    static $userDAGs = null;
+
     static function getEvents($month, $year, $pid) {
         return db_query(sprintf('SELECT * FROM redcap_events_calendar WHERE MONTH(event_date) = %d AND YEAR(event_date) = %d AND project_id = %d',
             $month, $year, $pid));
@@ -52,14 +54,18 @@ class CalendarExport extends AbstractExternalModule {
     }
 
     static function hasAccessToDAG($user, $project, $dag) {
-        $sql = sprintf('SELECT group_id FROM redcap_user_rights WHERE project_id = %d AND username = "%s"', $project, $user);
-        $queryResult = db_query($sql);
-        if (db_num_rows($queryResult) == 1) return true;    // user has access to all groups
-        $resultArray = db_fetch_assoc($queryResult);
-        foreach($resultArray as $result) {
-            if ($result['group_id'] == $dag) return true;
+        if (self::$userDAGs === NULL) {
+            $sql = sprintf('SELECT group_id FROM redcap_user_rights WHERE project_id = %d AND username = "%s"', $project, $user);
+            $dbResult = db_query($sql);
+            while ($result = db_fetch_assoc($dbResult)) {
+                self::$userDAGs[] = $result['group_id'];
+            }
         }
-        return false;
+
+        // if the dag array isn't empty and the first element is null, then this user has full access to all events
+        if (self::$userDAGs[0] === NULL) return true;
+
+        return (in_array($dag, self::$userDAGs));
     }
 
 }
