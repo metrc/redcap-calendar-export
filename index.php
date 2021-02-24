@@ -1,5 +1,5 @@
 <?php
-
+namespace JHU\CalendarExport;
 if ($_REQUEST['cal_id']) {
     require_once 'downloadics.php';
     die();
