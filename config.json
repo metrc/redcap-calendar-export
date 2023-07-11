@@ -1,0 +1,31 @@
+{
+  "name": "ICS Calendar Export",
+  "description": "Exports calendar events to ICS format for importing into calendaring applications",
+  "documentation": "README.md",
+  "namespace": "METRC\\CalendarExport",
+  "versions": [
+    {
+      "0.1.2": "Bug fixes, name change, added select/deselect buttons",
+      "0.1.1": "Minor Bug Fixes",
+      "0.1.0": "Initial Development Version"
+    }
+  ],
+  "authors": [
+    {
+      "name": "Paige Julianne Sullivan",
+      "email": "psullivan@jhu.edu",
+      "institution": "Johns Hopkins Bloomberg School of Public Health - METRC"
+    }
+  ],
+  "links": {
+    "project": [
+      {
+        "name": "Calendar ICS Export",
+        "icon": "date",
+        "url": "index.php"
+      }
+    ]
+  },
+  "permissions": [
+  ]
+}
