@@ -12,7 +12,7 @@ echo 'BEGIN:VCALENDAR' . "\r\n" .
      'CALSCALE:GREGORIAN'. "\r\n" .
      'NAME:REDCap Events' . "\r\n";
 
-foreach($_REQUEST['cal_id'] as $eventId) {
+foreach(htmlspecialchars($_REQUEST['cal_id'], ENT_QUOTES) as $eventId) {
     $event = CalendarExport::getEvent($eventId);
     $eventInfo = CalendarExport::decodeEvent($event);
 

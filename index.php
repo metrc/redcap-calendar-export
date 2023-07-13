@@ -14,18 +14,18 @@ if (!isset($_GET['month'])) {
     $_GET['month'] = date("n");
 }
 
-$month = $_GET['month'];
-$year = $_GET['year'];
+$month = htmlspecialchars($_GET['month'], ENT_QUOTES);
+$year = htmlspecialchars($_GET['year'], ENT_QUOTES);
 ?>
 
     <h4>Calendar Export to ICS Format</h4>
     Click events you want to export to as an .ics file
     <hr/>
 <form method="get">
-    <input type="hidden" name="id" value="<?php echo $_REQUEST['id'] ?>"/>
-    <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
-    <input type="hidden" name="pid" value="<?php echo $_REQUEST['pid'] ?>"/>
-    <input type="hidden" name="prefix" value="<?php echo $_REQUEST['prefix'] ?>"/>
+    <input type="hidden" name="id" value="<?php echo htmlspecialchars($_REQUEST['id'], ENT_QUOTES) ?>"/>
+    <input type="hidden" name="page" value="<?php echo htmlspecialchars($_REQUEST['page'], ENT_QUOTES) ?>"/>
+    <input type="hidden" name="pid" value="<?php echo htmlspecialchars($_REQUEST['pid'], ENT_QUOTES) ?>"/>
+    <input type="hidden" name="prefix" value="<?php echo htmlspecialchars($_REQUEST['prefix'], ENT_QUOTES) ?>"/>
 
     Month: <select name="month">
         <?php
@@ -48,7 +48,7 @@ $year = $_GET['year'];
 
 <hr/>
 <?php
-$results = CalendarExport::getEvents($month, $year, $_REQUEST['pid']);
+$results = CalendarExport::getEvents($month, $year, PROJECT_ID);
 print('<form method="post">');
 
 // @TODO: add javascript powered 'select all' / 'select none' links
@@ -57,7 +57,7 @@ print('<button type="button" onclick="checkAll();">Select All</button>&nbsp;&nbs
 
 
 while($result = db_fetch_assoc($results)) {
-    if (CalendarExport::hasAccessToDAG($_SESSION['username'], $_REQUEST['pid'], $result['group_id']))
+    if (CalendarExport::hasAccessToDAG($_SESSION['username'], PROJECT_ID, $result['group_id']))
         CalendarExport::generateCheckbox($result);
 }
 print('<p><button type="submit">Download Events as ICS</button></p></form>');
